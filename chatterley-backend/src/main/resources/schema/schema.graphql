@@ -1,0 +1,55 @@
+scalar DateTime
+
+type Query {
+    user(id: ID): User
+    users(first: Int!, after: String, nickNameFilter: String): UserConnection!
+
+    chat(id: ID!): Chat
+    chats(first: Int!, after: String!): ChatConnection!
+}
+
+type Mutation {
+    addMessage(input: AddMessageInput): Message!
+}
+
+input AddMessageInput {
+    chatId: ID!
+    text: String!
+}
+
+type User @connection {
+    id: ID!
+    nickName: String!
+    avatar: Image
+#    chats(first: Int!, after: String): ChatConnection!
+}
+
+type Image {
+    urls: [ImageUrl!]!
+}
+
+type ImageUrl {
+    alias: String!
+    url: String!
+}
+
+type Chat @connection {
+    id: ID!
+    type: ChatType!
+    participants: [User!]!
+#    messages(first: Int!, after: String): MessageConnection!
+}
+
+enum ChatType {
+    PERSONAL
+    DIALOG
+    GROUP
+}
+
+type Message @connection {
+    id: ID!
+    author: User!
+    chat: Chat!
+    text: String!
+    createTime: DateTime!
+}

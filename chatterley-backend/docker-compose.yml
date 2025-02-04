@@ -1,8 +1,21 @@
 version: '3.8'
 services:
-  mongodb:
+
+  chatterley-db:
+    container_name: chatterley-db
+    image: postgres:13
+    ports:
+      - 6432:5432
+    environment:
+      POSTGRES_DB: chatterley
+      POSTGRES_USER: chatterley
+      POSTGRES_PASSWORD: chatterley
+    volumes:
+      - /var/pg/chatterley-db:/var/lib/postgresql/data
+
+  chatterley-mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: chatterley-mongodb
     ports:
       - "27017:27017"
     volumes:

@@ -24,6 +24,7 @@ repositories {
 }
 
 val dgsPlatformVersion = "6.0.0"
+val mongodbVersion = "5.1.0"
 
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$dgsPlatformVersion"))
@@ -34,6 +35,8 @@ dependencies {
 //	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 //	implementation("jakarta.annotation:jakarta.annotation-api")
 //	implementation("net.datafaker:datafaker:1.7.0")
+    implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
 
@@ -42,10 +45,7 @@ dependencies {
 }
 
 tasks.withType<GenerateJavaTask> {
-	packageName = "com.ran.chatterley.generated"
-    typeMapping["UserConnection"] = "graphql.relay.SimpleListConnection<User>"
-    typeMapping["ChatConnection"] = "graphql.relay.SimpleListConnection<Chat>"
-    typeMapping["MessageConnection"] = "graphql.relay.SimpleListConnection<Message>"
+	packageName = "com.ran.chatterley.graphql.generated"
 }
 
 tasks.withType<KotlinCompile> {

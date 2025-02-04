@@ -3,7 +3,7 @@ package com.ran.chatterley.graphql.fetcher
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.InputArgument
-import com.ran.chatterley.generated.types.User
+import com.ran.chatterley.graphql.generated.types.User
 import graphql.relay.Connection
 import graphql.relay.SimpleListConnection
 import graphql.schema.DataFetchingEnvironment
@@ -13,8 +13,8 @@ class UserDataFetcher {
 
     @DgsQuery
     fun user(@InputArgument id: String?): User? {
-        val id = id ?: throw IllegalArgumentException("Requesting user by headers is not supported yet")
-        return USERS.find { it.id == id }
+        val idValue = id ?: throw IllegalArgumentException("Requesting user by headers is not supported yet")
+        return USERS.find { it.id == idValue }
     }
 
     @DgsQuery

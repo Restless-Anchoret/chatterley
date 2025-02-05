@@ -25,6 +25,8 @@ repositories {
 
 val dgsPlatformVersion = "6.0.0"
 //val mongodbVersion = "5.1.0"
+val postgresqlDriverVersion = "42.7.5"
+val h2DriverVersion = "2.3.232"
 
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$dgsPlatformVersion"))
@@ -35,6 +37,8 @@ dependencies {
 //    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 //    implementation("jakarta.annotation:jakarta.annotation-api")
 //    implementation("net.datafaker:datafaker:1.7.0")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.postgresql:postgresql:$postgresqlDriverVersion")
 //    implementation("org.mongodb:mongodb-driver-sync:$mongodbVersion")
 //    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
@@ -42,6 +46,7 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+	testImplementation("com.h2database:h2:$h2DriverVersion")
 }
 
 tasks.withType<GenerateJavaTask> {

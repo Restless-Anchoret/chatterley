@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component
 import java.time.Instant
 
 @Component
-class UserDao(val jdbcTemplate: NamedParameterJdbcTemplate) {
+class UserDao(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
-    suspend fun insert(user: User) {
+    // todo: run queries in coroutines of the separate dispatcher
+
+    fun insert(user: User) {
         val parameterSource = MapSqlParameterSource()
             .addValue("id", user.id)
             .addValue("nickname", user.nickname)
@@ -20,7 +22,7 @@ class UserDao(val jdbcTemplate: NamedParameterJdbcTemplate) {
             .update("insert into users values (:id, :nickname, :password_hash, :create_time)", parameterSource)
     }
 
-    suspend fun findById(id: String): User? {
+    fun findById(id: String): User? {
         val parameterSource = MapSqlParameterSource()
             .addValue("id", id)
         return jdbcTemplate
@@ -28,7 +30,15 @@ class UserDao(val jdbcTemplate: NamedParameterJdbcTemplate) {
             .firstOrNull()
     }
 
-    suspend fun selectForUpdate(id: String): User? {
+    fun findByNickname(nickname: String): User? {
+        val parameterSource = MapSqlParameterSource()
+            .addValue("nickname", nickname)
+        return jdbcTemplate
+            .query("select * from users where nickname = :nickname", parameterSource, ROW_MAPPER)
+            .firstOrNull()
+    }
+
+    fun selectForUpdate(id: String): User? {
         val parameterSource = MapSqlParameterSource()
             .addValue("id", id)
         return jdbcTemplate
@@ -36,7 +46,7 @@ class UserDao(val jdbcTemplate: NamedParameterJdbcTemplate) {
             .firstOrNull()
     }
 
-    suspend fun update(user: User) {
+    fun update(user: User) {
         val parameterSource = MapSqlParameterSource()
             .addValue("id", user.id)
             .addValue("password_hash", user.passwordHash)
@@ -49,7 +59,7 @@ class UserDao(val jdbcTemplate: NamedParameterJdbcTemplate) {
             User(
                 id = resultSet.getString("id"),
                 nickname = resultSet.getString("nickname"),
-                passwordHash = resultSet.getString("passwordHash"),
+                passwordHash = resultSet.getString("password_hash"),
                 createTime = Instant.ofEpochMilli(resultSet.getLong("create_time"))
             )
         }

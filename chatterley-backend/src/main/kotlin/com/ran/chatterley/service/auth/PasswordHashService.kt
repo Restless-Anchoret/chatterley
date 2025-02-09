@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 @Service
 class PasswordHashService {
 
-    suspend fun evaluatePasswordHash(password: String): String {
+    fun evaluatePasswordHash(password: String): String {
         return DigestUtils.sha256Hex(password + HASH_SALT)
     }
 

@@ -27,6 +27,8 @@ val dgsPlatformVersion = "6.0.0"
 //val mongodbVersion = "5.1.0"
 val postgresqlDriverVersion = "42.7.5"
 val h2DriverVersion = "2.3.232"
+val apacheCodecsVersion = "1.16.0"
+val jwtVersion = "0.12.6"
 
 dependencies {
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:$dgsPlatformVersion"))
@@ -43,6 +45,8 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8")
+    implementation("commons-codec:commons-codec:$apacheCodecsVersion")
+    implementation("io.jsonwebtoken:jjwt:$jwtVersion")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
